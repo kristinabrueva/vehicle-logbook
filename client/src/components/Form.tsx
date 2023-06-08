@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { MODELS, POPULAR_CARS } from "../data";
+import Button from "./Button";
+import Select from "./Select";
 
 const Form: React.FunctionComponent = () => {
   const data = MODELS;
@@ -9,18 +11,15 @@ const Form: React.FunctionComponent = () => {
   const [model, setModel] = useState<string>("");
   const [badge, setBadge] = useState<string>("");
   const [file, setFile] = useState<File>();
-  console.log(file);
   // select options
   const makeOptions = Object.keys(data);
 
-  const modelOptions = (key: string): string[] =>
-    Object.keys(data[key as keyof typeof data]);
+  const modelOptions = () => Object.keys(data[make as keyof typeof data]);
 
-  const badgeOptions = (key: string): string[] => {
+  const badgeOptions = () => {
     const dataModel = data[make as keyof typeof data];
-    return dataModel[key as keyof typeof dataModel];
+    return dataModel[model as keyof typeof dataModel];
   };
-
   const handleMakeChange = (event: React.ChangeEvent): void => {
     setBadge("");
     setModel("");
@@ -46,100 +45,86 @@ const Form: React.FunctionComponent = () => {
     setBadge(bg);
   };
 
+  const handleSubmit = (event: React.FormEvent): void => {
+    console.log("first");
+
+    fetch("http://localhost:4000/upload", {
+      method: "POST",
+      // We convert the React state to JSON and send it as the POST body
+      body: JSON.stringify({ make, model, badge, file }),
+    }).then(function (response) {
+      console.log(response);
+      return response.json();
+    });
+
+    event.preventDefault();
+  };
   return (
-    <div>
-      <h2>"Drill Down Form"</h2>
-      <form
-        action="#"
-        method="POST"
-        className="space-y-6 max-w-4xl ml-0 md:ml-40 md:mr-10 mt-5 relative"
-      >
-        <div>
-          <select
-            id="make"
-            name="make"
-            value={make}
-            required
-            onChange={handleMakeChange}
-          >
-            <option disabled={true} value="">
-              --Choose make--
-            </option>
-            {makeOptions.map((i) => (
-              <option key={i} value={i}>
-                {i}
-              </option>
-            ))}
-          </select>
-
-          {make && (
-            <select
-              id="model"
-              value={model}
-              name="model"
-              required
-              onChange={handleModelChange}
-            >
-              <option disabled={true} value="">
-                --Choose Model--
-              </option>
-              {modelOptions(make).map((i) => (
-                <option key={i} value={i}>
-                  {i}
-                </option>
-              ))}
-            </select>
-          )}
-          {model && (
-            <select
-              id="badge"
-              value={badge}
-              name="badge"
-              required
-              onChange={handleBadgeChange}
-            >
-              <option disabled={true} value="">
-                --Choose Badge--
-              </option>
-              {badgeOptions(model).map((i) => (
-                <option key={i} value={i}>
-                  {i}
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
-        {badge && (
-          <div>
-            <h3>Upload Logbook</h3>
-            <div>
-              <input
-                type="file"
-                onClick={(e: React.MouseEvent) => {
-                  const value = e.target as HTMLInputElement;
-                  if (value.files) {
-                    setFile(value.files[0]);
-                  }
-                }}
-              />
-            </div>
-            <button type="submit">Submit</button>
-          </div>
+    <form
+      className="flex flex-col text-left p-8 gap-6"
+      key="form"
+      onSubmit={handleSubmit}
+    >
+      <h1 className="font-bold text-6xl">Drill Down Form</h1>
+      <div className="flex flex-col gap-1">
+        <Select
+          name="make"
+          value={make}
+          options={makeOptions}
+          handleChange={handleMakeChange}
+        />
+        {make && (
+          <Select
+            name="model"
+            value={model}
+            options={modelOptions()}
+            handleChange={handleModelChange}
+          />
         )}
+        {model && (
+          <Select
+            name="badge"
+            value={badge}
+            options={badgeOptions()}
+            handleChange={handleBadgeChange}
+          />
+        )}
+      </div>
+      {badge && (
+        <div className="flex flex-col gap-5">
+          <h3 className="text-lg font-medium">Upload Logbook</h3>
+          <div className="flex flex-col gap-1">
+            <input
+              type="file"
+              accept="text/plain"
+              onClick={(e: React.MouseEvent) => {
+                const value = e.target as HTMLInputElement;
+                if (value.files) {
+                  setFile(value.files[0]);
+                }
+              }}
+              className="text-sm"
+            />
+            <Button type="submit" text="Submit"></Button>
+          </div>
+        </div>
+      )}
 
-        <h3>Select a vehicle</h3>
+      <h3 className="text-4xl font-bold">Select a vehicle</h3>
+      <div className="flex flex-col gap-1">
         {popularCars.map((car, i) => (
-          <button
+          <Button
+            id={i}
             key={i}
-            onClick={(e) =>
+            text={Object.values(car).join(" ")}
+            inline
+            handleClick={(e) =>
               handleCommonVehicleSelect(e, car.make, car.badge, car.model)
             }
-          >
-            {Object.values(car)}
-          </button>
+          />
         ))}
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
