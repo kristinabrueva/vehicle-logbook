@@ -16,5 +16,8 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["client/src"]
+  "include": ["client/src"],
+  "paths": {
+    "react": ["./node_modules/@types/react"]
+  }
 }
