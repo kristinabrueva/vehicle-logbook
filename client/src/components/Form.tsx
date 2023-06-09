@@ -46,16 +46,29 @@ const Form: React.FunctionComponent = () => {
   };
 
   const handleSubmit = (event: React.FormEvent): void => {
-    console.log("first");
+    if (!file) {
+      console.log("Please, upload a file");
+    } else {
+      let data = new FormData();
 
-    fetch("http://localhost:4000/upload", {
-      method: "POST",
-      // We convert the React state to JSON and send it as the POST body
-      body: JSON.stringify({ make, model, badge, file }),
-    }).then(function (response) {
-      console.log(response);
-      return response.json();
-    });
+      data.append("make", make);
+      data.append("make", make);
+      data.append("badge", badge);
+      data.append("file", file);
+
+      fetch("http://localhost:4000/upload", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          // "Content-type": "multipart/form-data",
+        },
+        body: data,
+      }).then(function (response) {
+        window.location.href = "http://localhost:4000/upload";
+        return response.json();
+      });
+    }
 
     event.preventDefault();
   };
@@ -97,7 +110,7 @@ const Form: React.FunctionComponent = () => {
             <input
               type="file"
               accept="text/plain"
-              onClick={(e: React.MouseEvent) => {
+              onChange={(e: React.ChangeEvent) => {
                 const value = e.target as HTMLInputElement;
                 if (value.files) {
                   setFile(value.files[0]);
