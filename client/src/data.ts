@@ -11,7 +11,7 @@ export const MODELS = {
   },
   Tesla: {
     "Model 3": ["Performance", "Long Range", "Dual Motor"],
-    "Model X": ["Standart", "Long Range Dual Motor"],
+    "Model X": ["Standart", "Long Range", "Dual Motor"],
     "Model S": ["Standart", "Long Range", "Triple Motor"],
   },
 };
