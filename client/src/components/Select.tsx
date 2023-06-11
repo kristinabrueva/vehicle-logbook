@@ -27,7 +27,7 @@ const Select = ({
     onChange={handleChange}
     className="block border-2 max-w-[160px] text-left text-base"
   >
-    <option disabled value="default" hidden>
+    <option disabled value="">
       {name}
     </option>
     {options.map((i, key) => (

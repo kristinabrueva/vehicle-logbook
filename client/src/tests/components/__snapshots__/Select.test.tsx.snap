@@ -11,8 +11,7 @@ exports[`Tests Select renders select correctly 1`] = `
   >
     <option
       disabled=""
-      hidden=""
-      value="default"
+      value=""
     >
       fruits
     </option>

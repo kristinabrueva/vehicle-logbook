@@ -26,8 +26,8 @@ exports[`renders App 1`] = `
         >
           <option
             disabled=""
-            hidden=""
-            value="default"
+            selected=""
+            value=""
           >
             make
           </option>

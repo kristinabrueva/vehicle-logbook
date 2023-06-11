@@ -22,8 +22,8 @@ exports[`Tests Form should render default form with one select only 1`] = `
       >
         <option
           disabled=""
-          hidden=""
-          value="default"
+          selected=""
+          value=""
         >
           make
         </option>
