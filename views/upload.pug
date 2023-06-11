@@ -1,0 +1,17 @@
+html
+  head
+    title= title
+  body
+    div
+      span= "Make: "
+      span= car.make
+    div
+      span= "Model: "
+      span= car.model
+    div
+      span= "Badge: "
+      span= car.badge
+    div
+      p= "Logbook: "
+      each str in logbook
+        p= str
