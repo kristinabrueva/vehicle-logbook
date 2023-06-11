@@ -6,11 +6,15 @@ import Select from "./Select";
 const Form: React.FunctionComponent = () => {
   const data = MODELS;
   const popularCars = POPULAR_CARS;
+
+  const [error, setError] = useState<boolean | undefined>(undefined);
+
   // selected values
   const [make, setMake] = useState<string>("");
   const [model, setModel] = useState<string>("");
   const [badge, setBadge] = useState<string>("");
   const [file, setFile] = useState<File>();
+
   // select options
   const makeOptions = Object.keys(data);
 
@@ -20,6 +24,7 @@ const Form: React.FunctionComponent = () => {
     const dataModel = data[make as keyof typeof data];
     return dataModel[model as keyof typeof dataModel];
   };
+
   const handleMakeChange = (event: React.ChangeEvent): void => {
     setBadge("");
     setModel("");
@@ -47,22 +52,17 @@ const Form: React.FunctionComponent = () => {
 
   const handleSubmit = (event: React.FormEvent): void => {
     if (!file) {
-      console.log("Please, upload a file");
+      setError(true);
     } else {
       let data = new FormData();
 
       data.append("make", make);
-      data.append("make", make);
+      data.append("model", model);
       data.append("badge", badge);
       data.append("file", file);
 
       fetch("http://localhost:4000/upload", {
         method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          // "Content-type": "multipart/form-data",
-        },
         body: data,
       }).then(function (response) {
         window.location.href = "http://localhost:4000/upload";
@@ -108,16 +108,24 @@ const Form: React.FunctionComponent = () => {
           <h3 className="text-lg font-medium">Upload Logbook</h3>
           <div className="flex flex-col gap-1">
             <input
+              name="file"
               type="file"
               accept="text/plain"
               onChange={(e: React.ChangeEvent) => {
                 const value = e.target as HTMLInputElement;
+                if (error) setError(false);
                 if (value.files) {
                   setFile(value.files[0]);
                 }
               }}
-              className="text-sm"
+              className={`text-sm w-fit line ${
+                error && "after:content-['❗️'] after:pl-1"
+              }
+                  ${error === false && "after:content-['✅'] after:pl-1"}`}
             />
+            {error && (
+              <div className="text-rose-600 text-sm">Please upload a file</div>
+            )}
             <Button type="submit" text="Submit"></Button>
           </div>
         </div>
