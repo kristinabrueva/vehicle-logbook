@@ -19,13 +19,15 @@ exports[`renders App 1`] = `
       >
         <select
           class="block border-2 max-w-[160px] text-left text-base"
+          data-testid="testMakeSelect"
           id="make"
           name="make"
           required=""
         >
           <option
             disabled=""
-            value=""
+            hidden=""
+            value="default"
           >
             make
           </option>

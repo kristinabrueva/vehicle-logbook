@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tests Select renders select correctly 1`] = `
+<div>
+  <select
+    class="block border-2 max-w-[160px] text-left text-base"
+    data-testid="testSelect"
+    id="fruits"
+    name="fruits"
+    required=""
+  >
+    <option
+      disabled=""
+      hidden=""
+      value="default"
+    >
+      fruits
+    </option>
+    <option
+      selected=""
+      value="Apple"
+    >
+      Apple
+    </option>
+    <option
+      value="Pear"
+    >
+      Pear
+    </option>
+    <option
+      value="Orange"
+    >
+      Orange
+    </option>
+  </select>
+</div>
+`;

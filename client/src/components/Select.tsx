@@ -1,8 +1,11 @@
+import React from "react";
+
 interface SelectProps {
   name: string;
   required?: boolean;
   value: string;
   options: string[];
+  testId: string;
   type?: "button" | "submit" | "reset" | undefined;
   handleChange?: (e: any) => void;
 }
@@ -12,21 +15,23 @@ const Select = ({
   required = true,
   value,
   options,
+  testId,
   handleChange,
 }: SelectProps): JSX.Element => (
   <select
     id={name}
+    data-testid={testId}
     name={name}
-    value={value}
+    defaultValue={value}
     required={required}
     onChange={handleChange}
     className="block border-2 max-w-[160px] text-left text-base"
   >
-    <option disabled={true} value="">
+    <option disabled value="default" hidden>
       {name}
     </option>
-    {options.map((i) => (
-      <option key={i} value={i}>
+    {options.map((i, key) => (
+      <option key={key} value={i}>
         {i}
       </option>
     ))}
