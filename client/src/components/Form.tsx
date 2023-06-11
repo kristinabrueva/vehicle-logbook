@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { MODELS, POPULAR_CARS } from "../data";
 import Button from "./Button";
 import Select from "./Select";
@@ -84,6 +84,7 @@ const Form: React.FunctionComponent = () => {
           name="make"
           value={make}
           options={makeOptions}
+          testId="testMakeSelect"
           handleChange={handleMakeChange}
         />
         {make && (
@@ -91,6 +92,7 @@ const Form: React.FunctionComponent = () => {
             name="model"
             value={model}
             options={modelOptions()}
+            testId="testModelSelect"
             handleChange={handleModelChange}
           />
         )}
@@ -99,6 +101,7 @@ const Form: React.FunctionComponent = () => {
             name="badge"
             value={badge}
             options={badgeOptions()}
+            testId="testBadgeSelect"
             handleChange={handleBadgeChange}
           />
         )}
