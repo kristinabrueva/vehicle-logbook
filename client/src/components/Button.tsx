@@ -1,3 +1,4 @@
+import React from "react";
 interface ButtonProps {
   id?: any;
   inline?: Boolean;
@@ -20,6 +21,7 @@ const Button = ({
         inline ? "inline" : "block"
       }`}
       id={id}
+      data-testid="testButton"
       onClick={handleClick}
     >
       {text}

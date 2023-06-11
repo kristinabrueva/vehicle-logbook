@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders button correctly 1`] = `
+<div>
+  <button
+    class="border-[1px] rounded-sm text-sm px-2 bg-gray-100 border-black py-1 max-w-fit block"
+    data-testid="testButton"
+  >
+    Click me
+  </button>
+</div>
+`;
