@@ -16,7 +16,6 @@ exports[`Tests Select renders select correctly 1`] = `
       fruits
     </option>
     <option
-      selected=""
       value="Apple"
     >
       Apple
